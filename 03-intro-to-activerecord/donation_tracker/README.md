@@ -157,3 +157,14 @@ Donation.create(amount: 20.00, date: 10/01/21, completed: false)
 - donation model 
 
 11. Create a method that will sort the list of existing organizations in alphabetical order.
+
+
+
+# what does the structure of our db need to look like  aka attributes each instance will have 
+Donation
+
+
+Organization
+
+
+Donor 

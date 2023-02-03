@@ -1,60 +1,57 @@
-class Donation
+class Donation < ActiveRecord::Base
 
-    attr_accessor :amount, :date, :organization_id 
-    attr_reader :id
+  # # CRUD 
 
-    def initialize(attributes) 
-        attributes.each do |key, value|
-            if self.respond_to?("#{key.to_s}=") 
-                self.send("#{key.to_s}=", value) 
-            end 
-        end
+  # # CREATE 
 
-    end
+  # # .new => create a Ruby instance, NOTE it doesnt persist this data(doesnt go to the db)
+  # # donation = Donation.new(amount: 100, date: "020323")
 
-    def save 
-        if self.id
-            self.update
-        else 
-            sql = <<-SQL
-                INSERT INTO donations (amount, date, organization_id) VALUES (?, ?, ?);
-            SQL
+  # # # need to follow up with .save will persist it to the db
+  # # donation.save
 
-            DB.execute(sql, self.amount, self.date, self.organization_id)
-            @id = DB.last_insert_row_id
-        end 
-        self  
-    end
+  # # .create => nice combo of .new and .save 
+  # donation = Donation.create(amount: 100, date: "020323")
 
-    def update 
-        sql = <<-SQL
-           UPDATE donations SET amount = ?, date = ?, organization_id = ? WHERE id = ?
-        SQL
+  # # READ 
 
-        DB.execute(sql, self.amount, self.date, self.organization_id, self.id)
-        self
-    end
+  # # .all => which will return all records in the db table as an array
+  # Donation.all
+  # # retreive a specific donation 
 
-    def self.all 
-        array_of_hashes = DB.execute("SELECT * FROM donations")
-        array_of_hashes.map do |hash|
-            binding.pry
-          self.new(hash)
-        end
-    end
+  # # .find(id)
+  # Donation.find(1)
 
-    def self.create_table 
-        sql = <<-SQL
-        CREATE TABLE IF NOT EXISTS donations (
-            id INTEGER PRIMARY KEY, 
-            amount INTEGER,
-            date INTEGER,
-            organization_id INTEGER
-        );
-        SQL
-        DB.execute(sql)
-    end 
+  # # find_by(attr: value)
+
+  # Donation.find_by(amount: 100)
+  # Donation.find_by_amount(100)
+
+  # # UPDATE 
+
+  # # first we need to identify what we are updating hint: find the record 
+  # donation = Donation.find(1)
+
+  # # update the record 
+  # donation.update(amount: 500)
+
+  # # DESTROY 
+
+  # # find the record we want to delete 
+
+  # donation = Donation.find(2)
+
+  # # delete the record using .destroy 
+
+  # donation.destroy 
 
 
+  # # destroy all records => .destroy_all
+
+  # Donation.destroy_all 
+
+  # def self.sum_all_amounts
+  #   self.sum(:amount)
+  # end
 end 
 

@@ -1,2 +1,10 @@
 require_relative './config/environment'
 require 'sinatra/activerecord/rake'
+
+
+# this is a file that we use to automate a lot of tasks that we plan to execute throught the development of our application 
+
+task :console do 
+  ActiveRecord::Base.logger = Logger.new(STDOUT) # prints out the sql queries occuring when I use active record 
+  Pry.start
+end
