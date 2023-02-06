@@ -21,5 +21,28 @@
 - belongs_to
 - has many, through 
 
+# foreign key columns are important bc they are the source of relations
 
-### Domain modeling 
+
+
+Types of relationships 
+
+has_many: one to many, this is always going to return as a collection: parent
+
+belongs_to: one to one relationship: child 
+
+has_many, through: many to many, join table
+
+
+donor 
+  has_many :donations
+  has_many :organizations, through: :donations 
+
+
+donations
+  belongs_to :donor 
+  belongs_to :organization 
+
+organization 
+  has_many :donations 
+  has_many :donors, through: :donations 
